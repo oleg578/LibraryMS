@@ -8,23 +8,16 @@ import java.util.Map;
 public class Library {
     private final Map<String, Book> depository;
     private final Map<String, Member> members;
-    //TODO: why we need this list of books?
-    // we already have a depository map that contains all the books.
-    // maybe we can remove this list and use the depository map instead.
-    private final List<Book> books;
 
     public Library() {
         this.depository = new HashMap<>();
         this.members = new HashMap<>();
-        this.books = new ArrayList<>();
     }
 
     public Library(Map<String, Book> depository,
-                   Map<String, Member> members,
-                   List<Book> books) {
+                   Map<String, Member> members) {
         this.depository = depository;
         this.members = members;
-        this.books = books;
     }
 
 
@@ -32,12 +25,10 @@ public class Library {
     public void destroy() {
         depository.clear();
         members.clear();
-        books.clear();
     }
 
     public void addBook(Book book) {
         depository.put(book.getIsbn(), book);
-        books.add(book);
     }
 
     public void removeBook(String isbn) {
