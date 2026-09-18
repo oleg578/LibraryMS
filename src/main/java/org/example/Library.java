@@ -1,46 +1,45 @@
 package org.example;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.example.domain.Book;
+import org.example.service.BookService;
+import org.example.domain.Member;
+import org.example.service.MemberService;
+
+import java.util.List;
+
 
 public class Library {
-    private final Map<String, Book> depository;
-    private final Map<String, Member> members;
+    private final BookService bookService;
+    private final MemberService memberService;
 
-    public Library() {
-        this.depository = new HashMap<>();
-        this.members = new HashMap<>();
-    }
-
-    public Library(Map<String, Book> depository,
-                   Map<String, Member> members) {
-        this.depository = depository;
-        this.members = members;
-    }
-
-
-
-    public void destroy() {
-        depository.clear();
-        members.clear();
+    public Library(BookService bookService,
+                   MemberService memberService) {
+        try {
+            this.bookService = bookService;
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("BookService cannot be null", e);
+        }
+        try {
+            this.memberService = memberService;
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("MemberService cannot be null", e);
+        }
     }
 
     public void addBook(Book book) {
-        depository.put(book.getIsbn(), book);
+        bookService.addBook(book);
     }
 
     public void removeBook(String isbn) {
-        depository.remove(isbn);
+        bookService.removeBook(isbn);
     }
 
     public Book getBook(String isbn) {
-        return depository.get(isbn);
+        return bookService.getBook(isbn);
     }
 
-    public void getAllBooks() {
-        for (Book book : depository.values()) {
-            System.out.println(book);
-        }
+    public List<Book> getAllBooks() {
+        return bookService.listBooks();
     }
 
     public void checkOutBook(String isbn, Member member) {
@@ -50,17 +49,12 @@ public class Library {
     }
 
     public void addMember(Member member) {
-        members.put(member.getId(), member);
     }
 
     public void removeMember(Member member) {
-        members.remove(member.getId());
     }
 
     public void getAllMembers() {
-        for (Member member : members.values()) {
-            System.out.println(member);
-        }
     }
 
 }
