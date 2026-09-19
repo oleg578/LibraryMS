@@ -4,6 +4,7 @@ public class Book {
     private String isbn;
     private String title;
     private String author;
+    private Integer qty;
 
     public Book(String isbn, String title, String author) {
         this.isbn = isbn;
@@ -33,6 +34,16 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Integer getQty() {
+        return qty;
+    }
+    public void setQty(Integer qty) {
+        if (qty <= 0 ) {
+            throw new IllegalArgumentException("qty must be greater than zero");
+        }
+        this.qty = qty;
     }
 
     @Override
